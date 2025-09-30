@@ -1,0 +1,148 @@
+// Prisma schema for Fan Playoffs Trivia Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== User & Auth =====
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  displayName   String
+  role          Role      @default(HOST)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  packs         Pack[]
+  hostedMatches Match[]
+
+  @@index([email])
+}
+
+enum Role {
+  HOST
+  ADMIN
+  CREATOR
+}
+
+// ===== Pack & Content =====
+
+model Pack {
+  id          String    @id @default(cuid())
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id])
+
+  meta        Json      // PackMeta: sport, team, locale, title, difficulty, version
+  innings     Json      // Inning[]: array of inning objects with questions
+  tags        String[]
+  isFeatured  Boolean   @default(false)
+  isKidsSafe  Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  matches     Match[]
+
+  @@index([ownerId])
+  @@index([isFeatured])
+}
+
+// ===== Match & Game =====
+
+model Match {
+  id          String      @id @default(cuid())
+  hostId      String
+  host        User        @relation(fields: [hostId], references: [id])
+  packId      String
+  pack        Pack        @relation(fields: [packId], references: [id])
+
+  joinCode    String      @unique
+  mode        MatchMode   @default(NINE_INNINGS)
+  status      MatchStatus @default(LOBBY)
+  settings    Json        // MatchSettings: grandSlam, speedBonus, timerSec, etc.
+
+  startedAt   DateTime?
+  endedAt     DateTime?
+  createdAt   DateTime    @default(now())
+
+  players     MatchPlayer[]
+  answers     MatchAnswer[]
+
+  @@index([hostId])
+  @@index([joinCode])
+  @@index([status])
+}
+
+enum MatchMode {
+  NINE_INNINGS
+  BEST_OF_3
+  BEST_OF_5
+}
+
+enum MatchStatus {
+  LOBBY
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+model MatchPlayer {
+  id        String   @id @default(cuid())
+  matchId   String
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  nickname  String
+  avatar    String?
+  city      String?
+  socketId  String?
+
+  joinedAt  DateTime @default(now())
+  leftAt    DateTime?
+
+  answers   MatchAnswer[]
+
+  @@index([matchId])
+  @@index([socketId])
+}
+
+model MatchAnswer {
+  id            String      @id @default(cuid())
+  matchId       String
+  match         Match       @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId      String
+  player        MatchPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  inningIdx     Int
+  questionIdx   Int
+  choice        String
+  isCorrect     Boolean
+  answerMs      Int         // time taken to answer
+  bonusAwarded  Boolean     @default(false)
+
+  createdAt     DateTime    @default(now())
+
+  @@index([matchId, playerId])
+  @@unique([matchId, playerId, inningIdx, questionIdx])
+}
+
+// ===== Analytics =====
+
+model AnalyticsEvent {
+  id          String   @id @default(cuid())
+  matchId     String?
+  playerId    String?
+  eventType   String   // match_created, player_joined, answer_submitted, etc.
+  payload     Json
+  createdAt   DateTime @default(now())
+
+  @@index([matchId])
+  @@index([eventType])
+  @@index([createdAt])
+}

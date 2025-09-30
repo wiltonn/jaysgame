@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  /* Big Text Mode */
+  .big-text {
+    font-size: 28pt !important;
+  }
+
+  .big-text h1 {
+    font-size: 36pt !important;
+  }
+
+  .big-text button {
+    font-size: 28pt !important;
+    padding: 1rem 2rem !important;
+  }
+
+  /* High Contrast Mode */
+  .high-contrast {
+    @apply bg-black text-white;
+  }
+
+  .high-contrast button {
+    @apply bg-yellow-400 text-black border-4 border-yellow-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6;
+  }
+}
