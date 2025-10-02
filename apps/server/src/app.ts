@@ -2,6 +2,8 @@ import express, { type Application, type Request, type Response } from 'express'
 import cors from 'cors';
 import { env } from './config/env';
 import authRoutes from './routes/auth.routes';
+import packRoutes from './routes/pack.routes';
+import matchRoutes from './routes/match.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -27,8 +29,8 @@ export function createApp(): Application {
 
   // API routes
   app.use('/api/auth', authRoutes);
-  // app.use('/api/matches', matchRoutes);
-  // app.use('/api/packs', packRoutes);
+  app.use('/api/matches', matchRoutes);
+  app.use('/api/packs', packRoutes);
 
   // 404 handler
   app.use((_req: Request, res: Response) => {

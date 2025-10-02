@@ -32,14 +32,14 @@ Players feel like they participated in a _game_, not a test. Venues and communit
 
 **Personas**
 
-- **Host Hannah (bar/club/teacher/parent):** Wants quick setup, QR join, TV display, simple controls.
+- **Host Hannah (bar/club/teacher/parent):** Wants quick setup, QR join, simple controls.
 - **Fan Frank (50+, hardcore):** Wants nostalgia, clips, no fiddly UI, big text, jokes.
 - **Family Fiona (mixed ages):** Wants inclusive difficulty, chill timers, read-aloud.
 - **Creator Chris:** Wants to upload/curate team packs and get distribution.
 
 **Core use cases**
 
-1. **Pickup Game (9 Innings)** at home or bar, 10–30 players, mobile join, TV scoreboard.
+1. **Pickup Game (9 Innings)** at home or bar, 10–30 players, mobile join.
 2. **Best-of-3 Series** between squads in a Discord or alumni group.
 3. **Venue League Night** with bracketed tournament and weekly standings.
 4. **Watch-Party Mode** during live sports (fast rounds between commercials).
@@ -53,9 +53,8 @@ Players feel like they participated in a _game_, not a test. Venues and communit
 - **Game formats:** 9-inning match (1–2 Qs/inning), optional “Grand Slam” final (4 runs).
 - **Social:** Emoji bursts, “Fan Heckle Mode” (pre-written cajoles), reveal clips (YouTube embeds).
 - **Accessibility:** Big Text Mode, high contrast, read-aloud questions, color-blind safe.
-- **Geolocation (opt-in):** City-level pins + “stadium seating” overlay (fun, not precise).
+- **Geolocation (opt-in):** City-level pins + "stadium seating" overlay (fun, not precise).
 - **Host Console:** start/skip inning, pause, inject heckle, trigger media.
-- **TV Display:** QR join + line score by inning + hype transitions.
 - **Packs:** JSON/CSV import; validation; themes per inning; difficulty tags.
 - **Scoring:** 1 run per correct; “Grand Slam” = 4 runs; optional fastest-five +1 (toggle).
 - **Anti-cheat (light):** Choice shuffle per player, short timers, latency normalization for speed points.
@@ -325,7 +324,7 @@ Bracket(id, orgId, name, type, seeds JSONB, rounds JSONB)  // Phase 2
 - **A1. Join:** Player can join a match via QR/URL within 30s on mid-tier mobile.
 - **A2. Questions:** All players receive a question within 200ms of each other; answer locks after submit; server records exactly one answer per player.
 - **A3. Scoring:** Correct answers award +1 run; inning 9 correctly awards +4; leaderboard updates in ≤300ms.
-- **A4. Stretch:** Host can trigger a 30s media segment that plays on TV and clients.
+- **A4. Stretch:** Host can trigger a 30s media segment that plays on clients.
 - **A5. Map:** If ≥1 player opts in, a city-level map renders; disabling location hides map immediately.
 - **A6. Accessibility:** Big-Text Mode increases base font ≥28pt; read-aloud speaks full question text.
 - **A7. Reliability:** If a player refreshes, they rejoin the current inning without losing prior answers.
@@ -335,10 +334,10 @@ Bracket(id, orgId, name, type, seeds JSONB, rounds JSONB)  // Phase 2
 ## 17) QA Plan (high level)
 
 - **Unit:** scoring, latency normalization, pack validation.
-- **Integration:** socket rooms, reconnection mid-inning, TV display sync.
+- **Integration:** socket rooms, reconnection mid-inning, host/player sync.
 - **Load:** 100 concurrent players answering within 5s; no dropped events.
 - **Accessibility:** keyboard navigation, screen reader labels, contrast checks.
-- **Cross-device:** iOS Safari, Android Chrome, desktop Chrome/Edge/Firefox, AirPlay/Chromecast TV.
+- **Cross-device:** iOS Safari, Android Chrome, desktop Chrome/Edge/Firefox.
 
 ---
 
@@ -355,7 +354,7 @@ Bracket(id, orgId, name, type, seeds JSONB, rounds JSONB)  // Phase 2
 
 **Phase 1 — MVP (Pickup Game) [4–6 weeks]**
 
-- 9-inning match, packs import/validate, host console, TV display, reactions, heckles, Big-Text, read-aloud, city-level map, basic analytics.
+- 9-inning match, packs import/validate, host console, reactions, heckles, Big-Text, read-aloud, city-level map, basic analytics.
 
 **Phase 2 — Series & Brackets [4–6 weeks]**
 
@@ -375,7 +374,6 @@ Bracket(id, orgId, name, type, seeds JSONB, rounds JSONB)  // Phase 2
 - [ ] Postgres (Prisma) schema migration
 - [ ] Pack import validator (CSV/JSON) + preview
 - [ ] Match state machine + scoring engine
-- [ ] TV display route (`/tv/:matchId`) with QR and line score
 - [ ] Accessibility: Big-Text, read-aloud, color-safe themes
 - [ ] Leaflet map with city-level pins; seating overlay option
 - [ ] Analytics pipeline (server events → DB/warehouse)
@@ -422,4 +420,4 @@ If you want, I can convert this PRD into:
 
 - a **ticket set** (user stories + acceptance criteria) for your backlog,
 - a **Postgres schema + Prisma models**, and
-- a **UI wireframe kit** (host console, player, TV) you can hand straight to devs/design.
+- a **UI wireframe kit** (host console, player) you can hand straight to devs/design.

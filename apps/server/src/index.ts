@@ -1,27 +1,13 @@
 import { createServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
 import { createApp } from './app';
 import { env } from './config/env';
+import { initializeSocket } from './socket';
 
 const app = createApp();
 const httpServer = createServer(app);
 
-// Socket.IO setup
-const io = new SocketIOServer(httpServer, {
-  cors: {
-    origin: env.CORS_ORIGIN,
-    credentials: true,
-  },
-});
-
-// Socket.IO connection handler
-io.on('connection', (socket) => {
-  console.info('Client connected:', socket.id);
-
-  socket.on('disconnect', () => {
-    console.info('Client disconnected:', socket.id);
-  });
-});
+// Initialize Socket.IO with Redis adapter, auth, and handlers
+const io = initializeSocket(httpServer);
 
 // Export io for use in other modules
 export { io };

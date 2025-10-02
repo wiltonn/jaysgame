@@ -81,20 +81,10 @@
 - Stretch trigger button
 - Match summary export
 
-**Milestone 3.3: TV Display**
-
-- Full-screen QR join display
-- Inning line score (baseball style)
-- Current question (large text)
-- Top 5 leaderboard
-- Hype transitions between innings
-- Embedded YouTube clip support
-
 **Acceptance Criteria:**
 
 - ✅ Player can join and answer on mid-tier mobile <30s
 - ✅ Big-Text mode increases font to 28pt+
-- ✅ TV display shows QR + scoreboard + question
 - ✅ Host can trigger stretch with 30s clip
 - ✅ All views sync within 200ms
 
@@ -158,10 +148,10 @@
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      Client Layer                           │
-├──────────────┬──────────────┬──────────────┬───────────────┤
-│  Player App  │ Host Console │  TV Display  │  Admin Panel  │
-│  (Mobile)    │  (Desktop)   │ (Chromecast) │   (Admin)     │
-└──────────────┴──────────────┴──────────────┴───────────────┘
+├──────────────┬──────────────┬───────────────┐
+│  Player App  │ Host Console │  Admin Panel  │
+│  (Mobile)    │  (Desktop)   │   (Admin)     │
+└──────────────┴──────────────┴───────────────┘
                             │
                             │ Socket.IO + HTTP
                             │

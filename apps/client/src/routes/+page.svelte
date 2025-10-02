@@ -9,21 +9,18 @@
       Hyper-social, playoff-style trivia that feels like a game night!
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <a href="/join" class="btn-primary text-center">
-        Join Game
+        🎮 Join Game
       </a>
-      <a href="/host" class="btn-primary text-center">
-        Host Game
-      </a>
-      <a href="/tv" class="btn-secondary text-center">
-        TV Display
+      <a href="/host/setup" class="btn-primary text-center">
+        🎯 Host Game
       </a>
     </div>
 
     <div class="mt-8 pt-8 border-t border-gray-200">
       <p class="text-sm text-gray-500 text-center">
-        🚀 Development Mode - Epic 1 Foundation
+        🚀 MVP Build - Player & Host Console Active
       </p>
     </div>
   </div>

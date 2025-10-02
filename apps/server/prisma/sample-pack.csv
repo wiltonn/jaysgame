@@ -1,0 +1,16 @@
+baseball,Toronto Blue Jays,en-US,Blue Jays History & Trivia,medium,1.0.0
+
+INNING,Historic Moments
+mc,What year did the Blue Jays win their first World Series?,1991,1992,1993,1994,1
+tf,The Blue Jays have won back-to-back World Series championships.,true
+mc,"Who was the Blue Jays manager during their 1992 and 1993 World Series wins?",Bobby Cox,Cito Gaston,Tony La Russa,Jim Leyland,1
+
+INNING,Players & Stats
+closest,How many home runs did Jose Bautista hit in the 2015 season?,40,home runs
+mc,Which Blue Jays player holds the franchise record for most career home runs?,Carlos Delgado,Jose Bautista,Vernon Wells,George Bell,0
+tf,Roy Halladay won the Cy Young Award while playing for the Blue Jays.,true
+
+INNING,Memorable Games
+mc,In what year did Jose Bautista hit his famous bat flip home run?,2014,2015,2016,2017,1
+tf,The Blue Jays played their first game at the SkyDome (now Rogers Centre) in 1989.,true
+mc,How many games did the Blue Jays win in the 2015 regular season?,93,89,95,91,0
